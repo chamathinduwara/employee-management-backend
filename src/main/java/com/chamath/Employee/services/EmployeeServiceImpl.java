@@ -39,4 +39,17 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         return employees;
     }
+
+    @Override
+    public boolean deteteEmployee(long id) {
+        EmployeeEnitiy employee = employeeRepository.findById(id).get();
+        employeeRepository.delete(employee);
+        return true;
+    }
+
+    @Override
+    public boolean updateEmployee(Employee employee) {
+        EmployeeEnitiy employeeEnitiy = employeeRepository.findById(employee.getId()).get();
+        return false;
+    }
 }
