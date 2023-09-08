@@ -11,5 +11,7 @@ public interface EmployeeService {
 
     boolean deteteEmployee(long id);
 
-    boolean updateEmployee(Employee employee);
+    Employee updateEmployee(long id, Employee employee);
+
+    Employee getEmployeeById(long id);
 }

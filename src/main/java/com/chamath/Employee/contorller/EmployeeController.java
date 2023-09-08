@@ -32,6 +32,12 @@ public class EmployeeController {
         return employeeService.getEmployees();
     }
 
+    @GetMapping("/employee/{id}")
+    public ResponseEntity<Employee> getEmployee(@PathVariable("id") long id){
+        Employee employee = employeeService.getEmployeeById(id);
+        return ResponseEntity.ok(employee);
+    }
+
     @DeleteMapping("/employee/{id}")
     public ResponseEntity<Map<String,Boolean>> deleteEmployee(@PathVariable("id") long id) {
         boolean deleted = false;
@@ -42,14 +48,13 @@ public class EmployeeController {
 
     }
 
-    @PutMapping("/employee")
-    public ResponseEntity<Map<String,Boolean>> updateEmployee(
+    @PutMapping("/employee/{id}")
+    public ResponseEntity<Employee> updateEmployee(
+            @PathVariable Long id,
             @RequestBody Employee employee
     ){
-        boolean update = false;
-        update = employeeService.updateEmployee(employee);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("updated", update);
-        return ResponseEntity.ok(response);
+
+        Employee newEmployee = employeeService.updateEmployee(id, employee);
+        return ResponseEntity.ok(employee);
     }
 }
