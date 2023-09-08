@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService{
@@ -20,5 +23,20 @@ public class EmployeeServiceImpl implements EmployeeService{
         BeanUtils.copyProperties(employee, employeeEnitiy);
         employeeRepository.save(employeeEnitiy);
         return employee;
+    }
+
+    @Override
+    public List<Employee> getEmployees() {
+        List<EmployeeEnitiy> employeeEnitiys = employeeRepository.findAll();
+        List<Employee> employees =  employeeEnitiys
+                .stream()
+                .map(emp -> new Employee(
+                        emp.getId(),
+                        emp.getFirstName(),
+                        emp.getLastName(),
+                        emp.getEmailId()))
+                .collect(Collectors.toList());
+
+        return employees;
     }
 }
